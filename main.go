@@ -58,18 +58,18 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 }
 
 func main() {
+	//Load the .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file, please create one in the root directory")
+	}
+	
 	if os.Getenv("ENV") == "PRODUCTION" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	//Start the default gin server
 	r := gin.Default()
-
-	//Load the .env file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file, please create one in the root directory")
-	}
 
 	r.Use(CORSMiddleware())
 	r.Use(RequestIDMiddleware())
